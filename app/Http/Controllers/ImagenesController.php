@@ -34,10 +34,10 @@ class ImagenesController extends Controller
         $nuevaImagen->imagen = $nombreImagen;
         $nuevaImagen-> url = $urlImagen;
 
-        /*find()->with(['lugares_naturales.imagen']);
+        find()->with(['lugares_naturales.imagen']);
         find()->with(['eventos.imagen']);
         find()->with(['rutas.imagen']);
-        find()->with(['asistencias.imagen']);*/
+        find()->with(['asistencias.imagen']);
 
         $nuevaImagen->save();
 
