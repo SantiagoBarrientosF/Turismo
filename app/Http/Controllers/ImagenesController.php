@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\asistencias;
 use App\Models\imagenes;
+use App\Models\lugares_naturales;
+use App\Models\rutas;
 use Illuminate\Http\Request;
 
 class ImagenesController extends Controller
@@ -34,12 +37,13 @@ class ImagenesController extends Controller
         $nuevaImagen->imagen = $nombreImagen;
         $nuevaImagen-> url = $urlImagen;
 
-        find()->with(['lugares_naturales.imagen']);
-        find()->with(['eventos.imagen']);
-        find()->with(['rutas.imagen']);
-        find()->with(['asistencias.imagen']);
+        $relaciones = lugares_naturales::find('$id')->with(['lugares_naturales.imagen']);
+        $relaciones = imagenes::find('$id_eventos')->with(['eventos.imagen']);
+        $relaciones = rutas::find('$id_rutas')->with(['rutas.imagen']);
+        $relaciones = asistencias::find('$id_asistencias')->with(['asistencias.imagen']);
 
         $nuevaImagen->save();
+        $relaciones->save();
 
 
 
