@@ -37,13 +37,13 @@ class ImagenesController extends Controller
         $nuevaImagen->imagen = $nombreImagen;
         $nuevaImagen-> url = $urlImagen;
 
-        $relaciones = lugares_naturales::find('$id')->with(['lugares_naturales.imagen']);
+        /*$relaciones = lugares_naturales::find('$id')->with(['lugares_naturales.imagen']);
         $relaciones = imagenes::find('$id_eventos')->with(['eventos.imagen']);
         $relaciones = rutas::find('$id_rutas')->with(['rutas.imagen']);
-        $relaciones = asistencias::find('$id_asistencias')->with(['asistencias.imagen']);
+        $relaciones = asistencias::find('$id_asistencias')->with(['asistencias.imagen']);*/
 
         $nuevaImagen->save();
-        $relaciones->save();
+        //$relaciones->save();
 
 
 
