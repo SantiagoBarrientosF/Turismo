@@ -22,32 +22,32 @@ class EventosController extends Controller
             'descripcion'=>'required',
             'aforos'=>'required',
             'tipo_evento'=>'required',
+            'imagen' =>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'contacto'=>'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
-            
-            
-        ]); 
 
-        $imagen = $request->file['logo'];
 
-        $nombreImagen = time() . '_' . $imagen-> getClientOriginalName();
+        ]);
 
-        $imagen->move(public_path('imagenes/eventos'), $nombreImagen);
-        $urlImagen = asset('imagenes/eventos' . $nombreImagen);
+        //$imagen = $request->file['imagen'];
+
+        //$Imagenevento = time() . '_' . $imagen-> getClientOriginalName();
+
+        //$imagen->move(public_path('imagenes'), $Imagenevento);
+        //$urlevento = asset('imagenes/'. $Imagenevento);
+
         $eventos = new eventos;
-        $eventos -> id_eventos = $request -> id_eventos;
-        $eventos -> nombre = $request -> nombre;
-        $eventos -> fecha = $request -> fecha;
-        $eventos -> descripcion = $request -> descripcion;
-        $eventos -> aforos = $request -> aforos;
-        $eventos -> tipo_evento = $request -> tipo_evento;
-        $eventos -> imagen = $request -> imagen;
-        $eventos -> contacto = $request -> contacto;
-        $eventos -> id_estado = $request -> id_estado;
+        $eventos ->id_eventos = $request ->id_eventos;
+        $eventos ->nombre = $request ->nombre;
+        $eventos ->fecha = $request ->fecha;
+        $eventos ->descripcion = $request ->descripcion;
+        $eventos ->aforos = $request ->aforos;
+        $eventos ->tipo_evento = $request ->tipo_evento;
+        //  $eventos ->imagen = $Imagenevento;
+        $eventos ->contacto = $request ->contacto;
+        $eventos ->id_estado = $request ->id_estado;
 
         $eventos -> save();
 
-        return $eventos;
     }
 
     /*
