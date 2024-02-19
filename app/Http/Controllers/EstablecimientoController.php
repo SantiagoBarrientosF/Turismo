@@ -25,22 +25,28 @@ class EstablecimientoController extends Controller
         'descripcion'=>'required',
         'tipo_negocio'=>'required',
         'propietario'=>'required',
-        'logo'=>'required',
+        'logo'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         'redes_id'=>'required',
         'detalle'=>'required',
 
 
+
     ]);
-        $logo= $request->file['logo'];
 
-        $nombreImagen = time() . '_' . $logo->getClientOriginalName();
 
-        $logo ->move(public_path('imagenes/establecimientos'), $nombreImagen);
-        $urlImagen = asset('imagenes/establecimientos' . $nombreImagen);
+    $logo = $request->file('logo');
+
+
+    $nombreLogo = time() . '_' . $logo->getClientOriginalName();
+
+
+    $logo->move(public_path('imagenes'), $nombreLogo);
+    $urlLogo = asset('imagenes/establecimiento/'. $nombreLogo);
+
 
 
         $establecimiento = new establecimiento;
-        $establecimiento-> id_establecimiento=$request->id_establecimiento;
+        $establecimiento->id_establecimiento=$request->id_establecimiento;
         $establecimiento->nombre =$request->nombre;
         $establecimiento->localidad =$request->localidad;
         $establecimiento->direccion =$request->direccion;
@@ -50,12 +56,13 @@ class EstablecimientoController extends Controller
         $establecimiento->propietario =$request->propietario;
         $establecimiento->id_usuario =$request->id_usuario;
         $establecimiento->id_estado =$request->id_estado;
-        $establecimiento->logo =$urlImagen;
+        $establecimiento->logo =$request->logo;
         $establecimiento->redes_id =$request->redes_id;
         $establecimiento->detalle =$request->detalle;
 
         $establecimiento->save();
-        return $establecimiento;
+
+
     }
 
 

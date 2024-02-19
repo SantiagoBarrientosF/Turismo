@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\imagenes;
 use App\Models\lugares_naturales;
 use Illuminate\Http\Request;
 
@@ -22,12 +23,18 @@ class LugaresNaturalesController extends Controller
         $request->validate([
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        
+
         $L_naturales= new lugares_naturales;
         $L_naturales -> id_lugar = $request ->id_lugar;
         $L_naturales -> distancia = $request -> distancia;
         $L_naturales -> nombre = $request -> nombre;
         $L_naturales -> descripcion = $request -> descripcion;
+
+        $relaciones = lugares_naturales::find('id')->with(['lugares_naturales.imagen']);
+
+        $L_naturales->save();
+        $relaciones->save();
+
     }
 
     /**

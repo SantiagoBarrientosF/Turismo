@@ -26,6 +26,6 @@ class AsistenciasController extends Controller
 
         $asistencias->save();
 
-        return $asistencias;
+
     }
 }
