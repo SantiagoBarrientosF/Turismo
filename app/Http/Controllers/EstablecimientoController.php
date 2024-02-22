@@ -17,31 +17,20 @@ class EstablecimientoController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request){
-    $request->validate([
-        'nombre'=>'required',
-        'localidad'=>'required',
-        'direccion'=>'required',
-        'telefono'=>'required',
-        'descripcion'=>'required',
-        'tipo_negocio'=>'required',
-        'propietario'=>'required',
-        'logo'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'redes_id'=>'required',
-        'detalle'=>'required',
 
 
+        $logo = $request->file('logo');
 
-    ]);
+        if($logo){
 
+            $Imagenlogo = time() . '_' . $logo-> getClientOriginalName();
 
-    $logo = $request->file('logo');
+            $logo->move(public_path('imagenes'), $Imagenlogo);
+            $urllogo = asset('imagenes/'. $Imagenlogo);
+        }else{
+            $urllogo = null;
+        }
 
-
-    $nombreLogo = time() . '_' . $logo->getClientOriginalName();
-
-
-    $logo->move(public_path('imagenes'), $nombreLogo);
-    $urlLogo = asset('imagenes/establecimiento/'. $nombreLogo);
 
 
 
@@ -56,13 +45,17 @@ class EstablecimientoController extends Controller
         $establecimiento->propietario =$request->propietario;
         $establecimiento->id_usuario =$request->id_usuario;
         $establecimiento->id_estado =$request->id_estado;
-        $establecimiento->logo =$request->logo;
+        $establecimiento->logo =$urllogo;
         $establecimiento->redes_id =$request->redes_id;
         $establecimiento->detalle =$request->detalle;
 
         $establecimiento->save();
 
-
+        return response()->json([
+            'success' => true,
+            'message' => 'Establecimiento creado correctamente',
+            'imagen' => $Imagenlogo,
+        ]);
     }
 
 
