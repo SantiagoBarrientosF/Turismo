@@ -20,37 +20,17 @@ class ImagenesController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        //$request->validate([
+            //'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //]);
+        /*
+        $imagen = Imagen::find($imagenId);
+        $historia = Historia::find($eventoId);
 
-        $imagen = $request->file('imagen');
+        $imagen->Historia()->attach($historia);
+        */
 
-
-        $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
-
-
-        $imagen->move(public_path('imagenes'), $nombreImagen);
-        $urlImagen = asset('imagenes/' . $nombreImagen);
-
-        $nuevaImagen = new imagenes();
-        $nuevaImagen->imagen = $nombreImagen;
-        $nuevaImagen-> url = $urlImagen;
-
-        $relaciones = imagenes::find('$id')->with(['lugares_naturales.imagen']);
-        $relaciones = imagenes::find('$id_eventos')->with(['eventos.imagen']);
-        $relaciones = imagenes::find('$id_rutas')->with(['rutas.imagen']);
-        $relaciones = imagenes::find('$id_asistencias')->with(['asistencias.imagen']);
-
-
-        $nuevaImagen->save();
-        $relaciones->save();
-
-
-        return response()->json(['url' => $urlImagen]);
     }
-
-
 
     public function show(imagenes $imagenes)
     {

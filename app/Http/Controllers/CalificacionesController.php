@@ -17,21 +17,15 @@ class CalificacionesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'idcalificaciones'=>'required',
-            'calificacion'=>'required',
-            'nombre'=>'required',
-            'comentario'=>'required'
 
-         ]);
         $calificaciones = new calificaciones;
-        $calificaciones ->id_calificaciones = $request -> id_calificaciones;
-        $calificaciones ->calificacion = $request -> calificacion;
-        $calificaciones ->nombre =$request -> nombre;
-        $calificaciones ->comentario = $request -> comentario;
+        $calificaciones ->id_calificaciones = $request ->id_calificaciones;
+        $calificaciones ->calificacion = $request ->calificacion;
+        $calificaciones ->nombre =$request ->nombre;
+        $calificaciones ->comentario = $request ->comentario;
         $calificaciones -> save();
 
-        return $calificaciones;
+        $calificaciones->save();
 
     }
 
@@ -51,7 +45,7 @@ class CalificacionesController extends Controller
 
         $calificaciones -> update();
 
-        return $calificaciones;
+
     }
 
 

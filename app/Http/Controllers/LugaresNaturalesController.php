@@ -20,20 +20,42 @@ class LugaresNaturalesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+
+
+        $imagenlnaturales= $request->file('imagenlugar');
+        $imglugares ="";
+        /*
+        Condicional if encargado de verificar que se este enviando una imagen
+        */
+
+        if($imagenlnaturales){
+            // Se encarga de generar un nombre a la imagen en base al tiempo
+            $imglugares = time() . '_' . $imagenlnaturales-> getClientOriginalName();
+            //Se envia la imagen a una carpeta publica
+            $imagenlnaturales->move(public_path('imagenes/lugares_naturales/'), $imglugares);
+            //asigna una url a la imagen enviada
+            $urllnaturales = asset('imagenes/lugares_naturales'. $imglugares);
+        }else{
+            //En caso de no encontrar imagen se enviara un valor nulo
+            $urllnaturales = null;
+        }
+
 
         $L_naturales= new lugares_naturales;
-        $L_naturales -> id_lugar = $request ->id_lugar;
-        $L_naturales -> distancia = $request -> distancia;
-        $L_naturales -> nombre = $request -> nombre;
-        $L_naturales -> descripcion = $request -> descripcion;
+        $L_naturales ->id_lugar = $request ->id_lugar;
+        $L_naturales ->distancia = $request ->distancia;
+        $L_naturales ->nombre = $request ->nombre;
+        $L_naturales ->imagenlugar = $urllnaturales;
+        $L_naturales ->descripcion = $request ->descripcion;
 
-        $relaciones = lugares_naturales::find('id')->with(['lugares_naturales.imagen']);
+
 
         $L_naturales->save();
-        $relaciones->save();
+        return response()->json([
+            'mensaje' =>"imagen enviada correctamente",
+
+        ]);
+
 
     }
 

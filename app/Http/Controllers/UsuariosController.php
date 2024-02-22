@@ -16,18 +16,19 @@ class UsuariosController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'contrasena'=>'required'
-            
-        ]);
       $usuarios = new usuarios;
-      $usuarios -> id_usuarios = $request ->id_usuarios;
-      $usuarios -> contrasena = $request -> contrasena;
-      $usuarios -> id_perfil = $request -> id_perfil;
-      
+      $usuarios ->id_usuarios = $request ->id_usuarios;
+      $usuarios ->nombre = $request ->nombre;
+      $usuarios ->apellido = $request ->apellido;
+      $usuarios ->correo = $request ->correo;
+      $usuarios ->contrasena = $request ->contrasena;
+
+
 
       $usuarios->save();
-      return $usuarios;
+      return response()->json([
+       'mensaje'=> 'Datos enviados correctamente',
+      ]);
     }
 
     /**

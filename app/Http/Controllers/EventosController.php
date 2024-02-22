@@ -20,33 +20,44 @@ class EventosController extends Controller
             'nombre'=>'required',
             'fecha'=>'required',
             'descripcion'=>'required',
-            'aforos'=>'required',
+            'aforo'=>'required',
             'tipo_evento'=>'required',
-            'imagen' =>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'contacto'=>'required',
+            'imagen'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048'
 
 
         ]);
 
-        //$imagen = $request->file['imagen'];
+        $imagen = $request->file('imagen');
 
-        //$Imagenevento = time() . '_' . $imagen-> getClientOriginalName();
+        if($imagen){
 
-        //$imagen->move(public_path('imagenes'), $Imagenevento);
-        //$urlevento = asset('imagenes/'. $Imagenevento);
+            $imagenevento = time() . '_' . $imagen-> getClientOriginalName();
+
+            $imagen->move(public_path('imagenes/Eventos/'), $imagenevento);
+            $urlevento = asset('imagenes/Eventos/'. $imagenevento);
+        }else{
+            $urlevento = null;
+        }
+
 
         $eventos = new eventos;
         $eventos ->id_eventos = $request ->id_eventos;
         $eventos ->nombre = $request ->nombre;
         $eventos ->fecha = $request ->fecha;
         $eventos ->descripcion = $request ->descripcion;
-        $eventos ->aforos = $request ->aforos;
+        $eventos ->aforo = $request ->aforo;
         $eventos ->tipo_evento = $request ->tipo_evento;
-        //  $eventos ->imagen = $Imagenevento;
         $eventos ->contacto = $request ->contacto;
+        $eventos ->imagen = $urlevento;
         $eventos ->id_estado = $request ->id_estado;
 
         $eventos -> save();
+
+        return response()->json([
+            'message' => 'imagen enviada correctamente',
+            'imagenevento' => $imagenevento,
+        ]);
 
     }
 

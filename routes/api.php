@@ -7,6 +7,7 @@ use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\EventosController;
 use App\Http\Controllers\ExperienciasController;
 use App\Http\Controllers\ImagenesController;
+use App\Http\Controllers\LugaresNaturalesController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +19,8 @@ route::apiResource('calificacion',CalificacionesController::class);
 route::apiResource('eventos',EventosController::class);
 route::apiResource('experiencia',ExperienciasController::class);
 route::apiResource('usuarios',UsuariosController::class);
-//route::apiResource('api',ListApiRoutes::class);
+route::apiResource('l_naturales',LugaresNaturalesController::class);
+Route::get('lugares_naturales',([LugaresNaturalesController::class]));
+
+
 

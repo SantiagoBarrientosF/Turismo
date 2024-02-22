@@ -19,14 +19,14 @@ class EstablecimientoController extends Controller
     public function store(Request $request){
 
 
-        $logo = $request->file('logo');
+        $logo = $request->file('imagen');
 
         if($logo){
 
             $Imagenlogo = time() . '_' . $logo-> getClientOriginalName();
 
-            $logo->move(public_path('imagenes'), $Imagenlogo);
-            $urllogo = asset('imagenes/'. $Imagenlogo);
+            $logo->move(public_path('imagenes/establecimientos/'), $Imagenlogo);
+            $urllogo = asset('imagenes/establecimientos/'. $Imagenlogo);
         }else{
             $urllogo = null;
         }
@@ -39,22 +39,21 @@ class EstablecimientoController extends Controller
         $establecimiento->nombre =$request->nombre;
         $establecimiento->localidad =$request->localidad;
         $establecimiento->direccion =$request->direccion;
-        $establecimiento->telefono =$request->telefono;
+        $establecimiento->contacto =$request->contacto;
         $establecimiento->descripcion =$request->descripcion;
         $establecimiento->tipo_negocio =$request->tipo_negocio;
         $establecimiento->propietario =$request->propietario;
         $establecimiento->id_usuario =$request->id_usuario;
         $establecimiento->id_estado =$request->id_estado;
-        $establecimiento->logo =$urllogo;
+        $establecimiento->imagen =$urllogo;
         $establecimiento->redes_id =$request->redes_id;
-        $establecimiento->detalle =$request->detalle;
+
 
         $establecimiento->save();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Establecimiento creado correctamente',
-            'imagen' => $Imagenlogo,
+            'mensaje' => 'datos enviados correctamente',
+
         ]);
     }
 
