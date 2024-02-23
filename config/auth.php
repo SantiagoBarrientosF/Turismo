@@ -1,4 +1,5 @@
 <?php
+use NunoMaduro\Collision\Provider;
 
 return [
 
@@ -38,8 +39,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'usuarios',
         ],
+        'api' =>[
+        'driver'=>'tokens',
+        'Provider'=>'usuarios',
+        ]
     ],
 
     /*
@@ -62,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\usuarios::class,
         ],
 
         // 'users' => [

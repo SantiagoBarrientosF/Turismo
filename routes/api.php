@@ -2,6 +2,7 @@
 
 use App\Console\Commands\ListApiRoutes;
 use App\Http\Controllers\AsistenciasController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalificacionesController;
 use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\EventosController;
@@ -21,6 +22,7 @@ route::apiResource('experiencia',ExperienciasController::class);
 route::apiResource('usuarios',UsuariosController::class);
 route::apiResource('l_naturales',LugaresNaturalesController::class);
 Route::get('lugares_naturales',([LugaresNaturalesController::class]));
+route::apiResource('Login',UsuariosController::class);
 
 
 
