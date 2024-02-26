@@ -19,10 +19,10 @@ route::apiResource('imagen',ImagenesController::class);
 route::apiResource('calificacion',CalificacionesController::class);
 route::apiResource('eventos',EventosController::class);
 route::apiResource('experiencia',ExperienciasController::class);
-route::apiResource('usuarios',UsuariosController::class);
 route::apiResource('l_naturales',LugaresNaturalesController::class);
 Route::get('lugares_naturales',([LugaresNaturalesController::class]));
-route::apiResource('Login',UsuariosController::class);
+
+
 
 
 

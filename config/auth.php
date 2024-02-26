@@ -1,5 +1,4 @@
 <?php
-use NunoMaduro\Collision\Provider;
 
 return [
 
@@ -39,12 +38,8 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'usuarios',
+            'provider' => 'users',
         ],
-        'api' =>[
-        'driver'=>'tokens',
-        'Provider'=>'usuarios',
-        ]
     ],
 
     /*
@@ -67,7 +62,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\usuarios::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [
@@ -97,10 +92,12 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
+            'driver' => 'argon2',
+            'options' => [
+                'memory' => 1024,
+                'time' => 2,
+                'threads' => 2,
+            ],
         ],
     ],
 

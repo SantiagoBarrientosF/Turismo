@@ -10,12 +10,12 @@
     <form method="POST">
         @csrf
 <label>
-    <input name="correo" type="email" placeholder="email">
+    <input name="email" type="email" placeholder="email">
 </label><br>
 <label>
-    <input name="contrasena" type="password" placeholder="Contraseña">
+    <input name="password" type="password" placeholder="Contraseña">
 </label><br>
- <button type="submit">Loginbebesss</button>
+ <button type="submit">Login</button>
     </form>
 </body>
 </html>

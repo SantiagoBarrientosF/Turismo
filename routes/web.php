@@ -1,42 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request; // Importar la fachada Request para la validación
+use Illuminate\Support\Facades\Hash;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Route::get('/', function () {
+//     // Redirigir al inicio de sesión o a la página de inicio según el estado de la autenticación
+//     if (Auth::check()) {
+//         return redirect()->route('home'); // Suponiendo que tienes una ruta 'home'
+//     }
+//     return view('welcome');
+// });
 
-//Route::get('hola', function () {
-    return '<a href=>Sapo<a><br>';
-    //return '<a href=>Sapo<a><br>';
-    //return '<a href=>Sapo<a><br>';
-    //return '<a href=>Sapo<a><br>';
-    //return '<a href=>Sapo<a><br>';
-    //return '<a href=>Sapo<a><br>';
-//})->name('contacto');
-//route::get('hello', function(){
-    //return view('welcome');
-//});
-Route::view('login', 'login');
+Route::get('nombre', function () {
+    return view('login'); //accion aejecutar
+})->name('login');
 
-Route::post('login', function(){
+Route::post('login', function (Request $request) {
+    // Validar correo electrónico y contraseña
+    //$this->validate($request, [
+        //'email' => 'required|email',
+        //'password' => 'required',
+    //]);
 
-    $credentials = request()->only('correo', 'contrasena');
+    $credenciales = $request->only('email', 'password');
 
-    if(Auth::attempt($credentials)){
-    return response()->json([
-        'mensaje'=>'ingreso correctamente',
-    ]);
-    }else{
+    if (Auth::attempt($credenciales)) {
+        // Autenticación exitosa
+        // Devolver un JSON con la información del usuario
         return response()->json([
-            'mensaje'=>'inicio de sesion fallido',
+            'success' => true,
+            'usuario' => Auth::user(),
+            'token' => Auth::user()->createTokenForApplication(),
         ]);
     }
+
+    // Autenticación fallida
+    // Devolver un JSON con un mensaje de error
+    return response()->json([
+        'success' => false,
+        'message' => 'Credenciales inválidas',
+    ], 401);
 });
