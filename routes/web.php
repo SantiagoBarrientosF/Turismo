@@ -17,12 +17,12 @@ Route::get('nombre', function () {
     return view('login'); //accion aejecutar
 })->name('login');
 
-Route::post('login', function (Request $request) {
-    // Validar correo electrónico y contraseña
-    //$this->validate($request, [
-        //'email' => 'required|email',
-        //'password' => 'required',
-    //]);
+Route::post('nombre', function (Request $request) {
+     //Validar correo electrónico y contraseña
+   /* $this->validate($request, [
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);*/
 
     $credenciales = $request->only('email', 'password');
 
@@ -32,14 +32,19 @@ Route::post('login', function (Request $request) {
         return response()->json([
             'success' => true,
             'usuario' => Auth::user(),
-            'token' => Auth::user()->createTokenForApplication(),
+            'token' => Auth::user()//->createTokenForApplication(),
         ]);
     }
 
     // Autenticación fallida
     // Devolver un JSON con un mensaje de error
-    return response()->json([
-        'success' => false,
-        'message' => 'Credenciales inválidas',
-    ], 401);
+    //  return response()->json([
+        // 'success' => false,
+        // 'message' => 'Credenciales inválidas',
+    // ], 401);
+
+
+
+
+
 });
