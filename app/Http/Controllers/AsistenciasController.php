@@ -15,13 +15,10 @@ class AsistenciasController extends Controller
 
     public function store(Request $request){
 
-        // $request->validate([
 
-        // 'imagenasistencias' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        // ]);
 
         $imagenasistencia = $request->file('imagen');
-        //$imgasistencia = "";
+        $imgasistencia = "";
 
         if($imagenasistencia){
 
@@ -38,7 +35,7 @@ class AsistenciasController extends Controller
         $asistencias ->id_asistencias = $request ->id_asistencias;
         $asistencias ->contacto = $request ->contacto;
         $asistencias ->direccion = $request ->direccion;
-        $asistencias ->tipo = $request ->tipo;
+        $asistencias ->nombre = $request ->nombre;
         $asistencias ->imagen = $urlasistencia;
         $asistencias ->id_estado = $request ->id_estado;
 

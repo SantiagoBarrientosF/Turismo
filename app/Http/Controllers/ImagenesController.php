@@ -19,16 +19,35 @@ class ImagenesController extends Controller
 
     public function store(Request $request)
     {
+        $imagenprincipal = $request->file('imagen');
+        $imgasistencia = "";
 
-        //$request->validate([
-            //'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //]);
-        /*
-        $imagen = Imagen::find($imagenId);
-        $historia = Historia::find($eventoId);
+        if($imagenprincipal){
 
-        $imagen->Historia()->attach($historia);
-        */
+            $imgprincipal= time() . '_' . $imagenprincipal-> getClientOriginalName();
+
+            $imagenprincipal->move(public_path('imagenes/principal'), $imgprincipal);
+            $urlprincipal = asset('imagenes/principal/'. $imgprincipal);
+
+        }else{
+            $urlprincipal = null;
+        }
+
+        $imagenes = new imagenes;
+        $imagenes ->id_asistencias = $request ->id_asistencias;
+        $imagenes ->contacto = $request ->contacto;
+        $imagenes ->direccion = $request ->direccion;
+        $imagenes ->nombre = $request ->nombre;
+        $imagenes ->imagen = $urlprincipal;
+        $imagenes ->id_estado = $request ->id_estado;
+
+        $imagenes->save();
+
+        return response()->json([
+        'mensaje' => "Datos enviados correctamente",
+
+        ]);
+
 
     }
 
@@ -40,7 +59,9 @@ class ImagenesController extends Controller
 
     public function update(Request $request, imagenes $imagenes)
     {
-        //
+        $putimg="";
+        //$putimg->imagenes::find('id');
+
     }
 
     /**

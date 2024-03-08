@@ -16,6 +16,7 @@ class EventosController extends Controller
 
     public function store(Request $request)
     {
+        /*
         $request->validate([
             'nombre'=>'required',
             'fecha'=>'required',
@@ -27,6 +28,7 @@ class EventosController extends Controller
 
 
         ]);
+        */
 
         $imagen = $request->file('imagen');
 

@@ -20,10 +20,7 @@ class HistoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate{[
-            'id_historia'=>'required',
-            'descripcion'=>'required',
-        ]};
+
 
         $historia = new Historia;
         $historia->id_historia= $request->id_historia;

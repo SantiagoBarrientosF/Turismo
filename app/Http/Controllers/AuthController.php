@@ -2,47 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Hash;
+
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function login(request $request){
+         $request->validate([
+             'email' => 'required|email',
+             'password' => 'required',
+
+         ]);
+
+        $credenciales = [
+            "email"=> $request->email,
+            "password" => $request -> password,
+
+        ];
+
+        if(Auth::attempt($credenciales)){
+
+            $request->session()->regenerate();
+
+            return $request->session()->all();
+
+
+
+        }else{
+
+            // return redirect('login');
+            return abort(404);
+
+
+
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function logout(Request $request){
+        Auth::logout();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect('login');
     }
 }
+
+

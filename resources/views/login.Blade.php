@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST">
+    <form method="POST" action="{{route('start_session')}}">
         @csrf
 <label>
     <input name="email" type="email" placeholder="email">
