@@ -19,6 +19,7 @@ route::view('/registro',"registro")->name('registro');
 route::view('/usuario',"usuario")->name('usuario');
 
 
- //route::post('/registros',[logincontroller::class,'register'])->name('add_register');
- //route::post('/iniciarsesion',[logincontroller::class,'login'])->name('start_session');
- //route::get('/usuarios',[logincontroller::class,'logout'])->name('exit_session');
+ route::post('/registros',[logincontroller::class,'register'])->name('add_register');
+ route::post('/iniciarsesion',[logincontroller::class,'login'])->name('start_session');
+ route::get('/usuarios',[logincontroller::class,'logout'])->name('exit_session');
+

@@ -19,6 +19,8 @@ class ImagenesController extends Controller
 
     public function store(Request $request)
     {
+       /* This block of code is handling the file upload process for an image. Here's a breakdown of
+       what it does: */
         $imagenprincipal = $request->file('imagen');
         $imgasistencia = "";
 

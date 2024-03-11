@@ -22,9 +22,9 @@ class LoginController extends Controller
     $user->password = Hash::make($request->password);
     $user ->save();
 
-    // Auth::login($user);
+     Auth::login($user);
 
-    // return redirect('login');
+    return redirect('login');
 
    }
 

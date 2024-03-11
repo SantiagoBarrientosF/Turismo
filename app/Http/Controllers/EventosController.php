@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\eventos;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EventosController extends Controller
 {
 
     public function index()
     {
-        return eventos::all();
+
+        $registros = eventos::where('fecha', '>', Carbon::now())->get();
+
+         return $registros;
     }
 
 

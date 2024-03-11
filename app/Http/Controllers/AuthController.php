@@ -5,29 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Hash;
+
 
 
 class AuthController extends Controller
 {
     public function login(request $request){
+
          $request->validate([
              'email' => 'required|email',
              'password' => 'required',
 
          ]);
 
-        $credenciales = [
-            "email"=> $request->email,
-            "password" => $request -> password,
+         $credenciales = [
+             "email"=> $request->email,
+             "password" => $request -> password,
 
-        ];
+         ];
+
+        $credenciales = $request->only('email', 'password');
+
 
         if(Auth::attempt($credenciales)){
 
-            $request->session()->regenerate();
+            $user=Auth::user();
 
-            return $request->session()->all();
+            $usuarios = new User;
+             //$request->session()->regenerate();
+
+            $token = $usuarios->createToken('token-name')->plainTextToken;
+
+
+            return response()->json(['token' => $token]);
+
+            // return $request->session()->all();
 
 
 
