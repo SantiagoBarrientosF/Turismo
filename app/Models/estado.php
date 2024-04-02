@@ -11,4 +11,19 @@ class estado extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    // protected $table = 'estado';
+
+    // protected $primaryKey = 'id_estado';
+
+
+    public function estado_establecimiento(){
+
+        return $this ->belongstomany(establecimiento::class,'establecimientos');
+
+       }
+
+       public function eventos(){
+        return $this->hasMany(eventos::class,'estado');
+    }
 }

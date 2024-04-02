@@ -9,7 +9,6 @@ class lugares_naturales extends Model
 {
     use HasFactory;
 
-    public function imagenes(){
-        return $this->belongstomany(imagenes::class,'lugares_naturales_has_imagenes');
-    }
+    protected $table = 'lugares_naturales';
+    protected $fillable = ['id_lugar','distancia','nombre','imagenlugar','descripcion','id_estado'];
 }

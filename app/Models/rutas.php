@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class rutas extends Model
 {
     use HasFactory;
-    
+    protected $table ='rutas';
+
     public function imagenes(){
         return $this->belongtonmany(imagenes::class,'rutas_has_imagenes');
     }

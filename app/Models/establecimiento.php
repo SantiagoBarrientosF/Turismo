@@ -9,6 +9,19 @@ class establecimiento extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['logo'];
+     protected $table = 'establecimientos';
+
+     protected $fillable=['id_establecimiento','nombre','localidad','direccion','contacto','descripcion','tipo_negocio','propietario','id_estado','imagen','detalle'];
+
+     protected $primaryKey = 'id_asistencias';
+
+
+    public function estados(){
+
+        return $this ->hasMany(estado::class,'establecimientos');
+    }
+
+
+
 
 }

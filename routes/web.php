@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventosController;
 use App\Http\Controllers\logincontroller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -22,4 +23,7 @@ route::view('/usuario',"usuario")->name('usuario');
  route::post('/registros',[logincontroller::class,'register'])->name('add_register');
  route::post('/iniciarsesion',[logincontroller::class,'login'])->name('start_session');
  route::get('/usuarios',[logincontroller::class,'logout'])->name('exit_session');
+
+ route::view('/actulizar',"actulizar")->name('actualizar');
+ route::put('/actualizar',[EventosController::class,'update'])->name('actualizar');
 

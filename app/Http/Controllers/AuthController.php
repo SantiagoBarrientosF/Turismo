@@ -31,10 +31,11 @@ class AuthController extends Controller
 
             $user=Auth::user();
 
-            $usuarios = new User;
-             //$request->session()->regenerate();
+             //$usuarios = new User;
+            //  $request->session()->regenerate();
 
-            $token = $usuarios->createToken('token-name')->plainTextToken;
+
+            $token = $user->createToken('token-name')->plainTextToken;
 
 
             return response()->json(['token' => $token]);
@@ -61,6 +62,13 @@ class AuthController extends Controller
 
         return redirect('login');
     }
+
+
+
+
+
+
+
 }
 
 

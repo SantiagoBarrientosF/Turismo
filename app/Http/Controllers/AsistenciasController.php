@@ -49,11 +49,46 @@ class AsistenciasController extends Controller
 
     }
 
-    public function update(Request $request, asistencias $asistencias)
-    {
-     return "WORKS";
+    public function show($id){
+        $asistencia=asistencias::findOrFail($id);
+
     }
 
+    public function update(Request $request, asistencias $asistencias)
+    {
+
+
+        if($asistencias){ $asistencias = asistencias::where('id_asistencias', $request->id_asistencias);
+
+            $imagenasistencia = $request->file('imagenlugar');
+
+
+             if($imagenasistencia){
+
+                 $imgasistencia = time() . '_' . $imagenasistencia-> getClientOriginalName();
+
+                 $imagenasistencia->move(public_path('imagenes/asistencias'), $imgasistencia);
+                 $urlasistencia = asset('imagenes/asistencias/'. $imgasistencia);
+
+             }else{
+                 $urlasistencia = null;
+             }
+
+
+            $asistencias ->contacto = $request ->contacto;
+            $asistencias ->direccion = $request ->direccion;
+            $asistencias ->nombre = $request ->nombre;
+            $asistencias ->imagen = $urlasistencia;
+            $asistencias ->id_estado = $request ->id_estado;
+
+            $asistencias->update();
+
+            return "Datos actualizados correctamente";
+        }else{
+            return "no se pudo actualizar";
+        }
+
+    }
     public function destroy(asistencias $asistencias)
     {
         //

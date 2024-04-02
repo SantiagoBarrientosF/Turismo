@@ -14,6 +14,7 @@
 </label><br>
 <label>
     <input name="email" type="email" placeholder="email">
+    <input name="imagen" type="file" placeholder="email">
 </label><br>
 <label>
     <input name="password" type="password" placeholder="Contraseña">

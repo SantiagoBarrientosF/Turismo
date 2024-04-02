@@ -9,6 +9,9 @@ class imagenes extends Model
 {
     use HasFactory;
     protected $fillable = ['imagen'];
+    protected $table =['imagenes'];
+
+    protected $primaryKey='id_imagenes';
 
     public function asistencias(){
 

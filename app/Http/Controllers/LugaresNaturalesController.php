@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\imagenes;
 use App\Models\lugares_naturales;
 use Illuminate\Http\Request;
 
@@ -13,15 +12,14 @@ class LugaresNaturalesController extends Controller
      */
     public function index()
     {
-        lugares_naturales::all();
+        //
     }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
-
         $imagenlnaturales= $request->file('imagenlugar');
         $imglugares ="";
         /*
@@ -46,6 +44,7 @@ class LugaresNaturalesController extends Controller
         $L_naturales ->distancia = $request ->distancia;
         $L_naturales ->nombre = $request ->nombre;
         $L_naturales ->imagenlugar = $urllnaturales;
+        $L_naturales ->id_estado = $request ->id_estado;
         $L_naturales ->descripcion = $request ->descripcion;
 
 
@@ -55,7 +54,6 @@ class LugaresNaturalesController extends Controller
             'mensaje' =>"imagen enviada correctamente",
 
         ]);
-
 
     }
 
@@ -70,7 +68,7 @@ class LugaresNaturalesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, lugares_naturales $lugares_naturales)
     {
         //
     }

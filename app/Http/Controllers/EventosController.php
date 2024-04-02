@@ -14,7 +14,8 @@ class EventosController extends Controller
 
         $registros = eventos::where('fecha', '>', Carbon::now())->get();
 
-         return $registros;
+              return $registros;
+
     }
 
 
@@ -33,6 +34,7 @@ class EventosController extends Controller
 
         ]);
         */
+
 
         $imagen = $request->file('imagen');
 
@@ -70,29 +72,47 @@ class EventosController extends Controller
     /*
      * Display the specified resource.
      */
-    public function show(eventos $eventos)
+    public function show($id_eventos)
     {
-
+     $eventos=eventos::findorfail($id_eventos);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, eventos $eventos)
+    public function update(Request $request, $id_eventos)
     {
-        $eventos = new eventos;
-        $eventos -> id_eventos = $request -> id_eventos;
+
+        $eventos= eventos::findOrFail($id_eventos);
+
+        if($eventos){
+
+            $eventos=eventos::where('id_eventos',$id_eventos);
+
+        $imagen = $request->file('imagen');
+
+        if($imagen){
+
+            $imagenevento = time() . '_' . $imagen-> getClientOriginalName();
+
+            $imagen->move(public_path('imagenes/Eventos/'), $imagenevento);
+            $urlevento = asset('imagenes/Eventos/'. $imagenevento);
+        }else{
+            $urlevento = null;
+        }
+
         $eventos -> nombre = $request -> nombre;
         $eventos -> fecha = $request -> fecha;
         $eventos -> descripcion = $request -> descripcion;
         $eventos -> aforos = $request -> aforos;
         $eventos -> tipo_evento = $request -> tipo_evento;
         $eventos -> contacto = $request -> contacto;
+        $eventos ->imagen = $urlevento;
         $eventos -> id_estado = $request -> id_estado;
 
-        $eventos -> update();
+        $eventos -> Save();
+    }
 
-        return $eventos;
     }
 
     /**

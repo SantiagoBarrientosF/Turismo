@@ -25,4 +25,3 @@ route::apiResource('l_naturales',LugaresNaturalesController::class);
 route::post('start',[AuthController::class,'login'])->name('start_session');
 route::get('end',[AuthController::class,'logout'])->name('exit_session');
 Route::middleware('auth:sanctum')->get('users', [UserController::class,'getuser']);
-
