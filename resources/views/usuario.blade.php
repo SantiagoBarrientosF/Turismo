@@ -14,5 +14,10 @@
     <img src="https://s3.getstickerpack.com/storage/uploads/sticker-pack/piolin-cute/sticker_1.png?84b38503e754d970938c7c9fa746718f&d=200x200">
 
     <button><a href="{{route('exit_session')}}">Salir</button>
+
+        <button><a href="{{route('pdf_establecimiento')}}">pdf establecimiento</button>
+            <button><a href="{{route('pdf_eventos')}}">pdf eventos</button>
+                <button><a href="{{route('pdf_asistencias')}}">pdf asistencias</button>
+
 </body>
 </html>

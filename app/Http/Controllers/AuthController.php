@@ -30,27 +30,12 @@ class AuthController extends Controller
         if(Auth::attempt($credenciales)){
 
             $user=Auth::user();
-
-             //$usuarios = new User;
-            //  $request->session()->regenerate();
-
-
+            //Devolver token como json
             $token = $user->createToken('token-name')->plainTextToken;
-
-
             return response()->json(['token' => $token]);
 
-            // return $request->session()->all();
-
-
-
         }else{
-
-            // return redirect('login');
             return abort(404);
-
-
-
         }
     }
 

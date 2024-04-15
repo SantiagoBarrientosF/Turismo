@@ -23,7 +23,12 @@ class estado extends Model
 
        }
 
-       public function eventos(){
-        return $this->hasMany(eventos::class,'estado');
+
+    public function eventos_estado(){
+        return $this -> hasMany(estado::class,'eventos');
+    }
+
+    public function lugares_n_estado(){
+       return $this -> hasMany(estado::class,'lugares_naturales');
     }
 }

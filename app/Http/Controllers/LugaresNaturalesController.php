@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\lugares_naturales;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LugaresNaturalesController extends Controller
 {
@@ -12,7 +13,7 @@ class LugaresNaturalesController extends Controller
      */
     public function index()
     {
-        //
+      return lugares_naturales::all();
     }
 
     /**
@@ -62,7 +63,7 @@ class LugaresNaturalesController extends Controller
      */
     public function show(lugares_naturales $lugares_naturales)
     {
-        //
+        return $lugares_naturales;
     }
 
     /**
@@ -70,7 +71,43 @@ class LugaresNaturalesController extends Controller
      */
     public function update(Request $request, lugares_naturales $lugares_naturales)
     {
-        //
+        try{
+            $asistencias = lugares_naturales::findOrFail($request->id_lugar);
+            $imagenlnaturales= $request->file('imagenlugar');
+            $imglugares ="";
+            /*
+            Condicional if encargado de verificar que se este enviando una imagen
+            */
+
+            if($imagenlnaturales){
+                // Se encarga de generar un nombre a la imagen en base al tiempo
+                $imglugares = time() . '_' . $imagenlnaturales-> getClientOriginalName();
+                //Se envia la imagen a una carpeta publica
+                $imagenlnaturales->move(public_path('imagenes/lugares_naturales/'), $imglugares);
+                //asigna una url a la imagen enviada
+                $urllnaturales = asset('imagenes/lugares_naturales'. $imglugares);
+            }else{
+                //En caso de no encontrar imagen se enviara un valor nulo
+                $urllnaturales = null;
+            }
+            $asistencias->update([
+                'id_lugar' => $request ->id_lugar,
+                'distancia' => $request ->distancia,
+                'nombre' => $request ->nombre,
+                'imagenlugar' => $urllnaturales,
+                'id_estado' => $request ->id_estado,
+                'descripcion' => $request ->descripcion,
+
+            ]);
+            return response()->json([
+              'mensajerecibido'=>'Datos actualizados correctamente',
+          ]);
+
+        }catch (\Exception $e){
+           return response()->json([
+              'mensaje'=>'No se puede actualizar',
+           ]);
+        }
     }
 
     /**
@@ -78,6 +115,16 @@ class LugaresNaturalesController extends Controller
      */
     public function destroy(lugares_naturales $lugares_naturales)
     {
-        //
+        // lugares_naturales::find($id)->delete();
+    }
+
+    public function pdf(){
+
+        $L_naturales = lugares_naturales::all();
+        //mostrar pdf//
+        $pdf = Pdf::loadView('l_naturales.pdf', compact('establecimiento'));
+        //descargar pdf//
+        return $pdf->download('lugares_naturales.pdf');
+
     }
 }
