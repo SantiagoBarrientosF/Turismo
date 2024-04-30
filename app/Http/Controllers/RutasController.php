@@ -1,11 +1,11 @@
-    <?php
+<?php
 
 namespace App\Http\Controllers;
 
 use App\Models\establecimiento;
 use App\Models\rutas;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
+
 
 class RutasController extends Controller
 {
@@ -110,6 +110,3 @@ class RutasController extends Controller
     }
 }
 
-
-
-// $establecimiento = $establecimiento::find($request->id_establecimiento); o en su defecto

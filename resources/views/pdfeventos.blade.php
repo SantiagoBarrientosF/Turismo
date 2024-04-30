@@ -12,25 +12,25 @@
         <table>
            <thead>
             <tr>
-              <th>Id</th>
-              <th>Nombre_evento<o</th>
-              <th>Fecha</th>
-              <th>Contacto</th>
+              <th>Nombre_evento</th>
+              <th>Fecha_evento<o</th>
+              <th>Aforo</th>
+              <th>Total_eventos</th>
 
             </tr>
            </thead>
     <tbody>
-    {{-- @forelse ($eventos as $evento ) --}}
+    @forelse ($eventos as $evento )
         <tr>
-           <th>1</th>
-           <th>2</th>
-           <th>3</th>
-           <th>4</th>
+           <th>{{$evento->nombre}}</th>
+           <th>{{$evento->fecha}}</th>
+           <th>{{$evento->aforo}}</th>
+           <th>{{$totaleventos}}</th>
 
         </tr>
-    {{-- @empty
+     @empty
          <p>no hay datos</p>
-    @endforelse --}}
+    @endforelse
 
 
     </tbody>

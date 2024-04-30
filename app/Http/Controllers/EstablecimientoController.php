@@ -6,7 +6,7 @@ use App\Mail\mensajerecibido;
 use App\Models\establecimiento;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class EstablecimientoController extends Controller
 {
@@ -22,8 +22,11 @@ class EstablecimientoController extends Controller
      */
     public function store(Request $request){
 
+        echo "Request data:\n";
+        echo json_encode($request->all(), JSON_PRETTY_PRINT);
+
+
         // $request->validate([
-        //     'id_establecimiento'=>'required',
         //     'nombre'=>'required',
         //     'localidad'=>'required',
         //     'direccion'=>'required',
@@ -32,9 +35,6 @@ class EstablecimientoController extends Controller
         //     'tipo_negocio'=>'required',
         //     'propietario'=>'required',
         //     'imagen'=>'required',
-
-
-
         // ]);
 
 
@@ -53,6 +53,7 @@ class EstablecimientoController extends Controller
 
 
 
+       try{
 
         $establecimiento = new establecimiento;
         $establecimiento->id_establecimiento=$request->id_establecimiento;
@@ -63,18 +64,18 @@ class EstablecimientoController extends Controller
         $establecimiento->descripcion =$request->descripcion;
         $establecimiento->tipo_negocio =$request->tipo_negocio;
         $establecimiento->propietario =$request->propietario;
-        $establecimiento->id_usuario =$request->id_usuario;
-        $establecimiento->id_estado =$request->id_estado;
+        // $establecimiento->id_estado =$request->id_estado;
         $establecimiento->imagen =$urllogo;
-        $establecimiento->redes_id =$request->redes_id;
+
 
 
         $establecimiento->save();
-
+       }  catch (\Exception $e) {
         return response()->json([
-            'mensaje' => 'datos enviados correctamente',
+          'error' => 'Error al actualizar el establecimiento: ' . $e->getMessage(),
+        ], 500);
+      }
 
-        ]);
     }
 
 
@@ -86,24 +87,27 @@ class EstablecimientoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,establecimiento $establecimiento)
+    public function update(Request $request,establecimiento $establecimiento,$id_establecimiento)
     {
 
 
-            $request->validate([
-                'nombre' => 'required',
-                'localidad' => 'required',
-                'direccion' => 'required',
-                'contacto' => 'required',
-                'descripcion' => 'required',
-                'tipo_negocio' => 'required',
-                'propietario' => 'required',
-            ]);
+            // $request->validate([
+            //     'nombre' => 'required',
+            //     'localidad' => 'required',
+            //     'direccion' => 'required',
+            //     'contacto' => 'required',
+            //     'descripcion' => 'required',
+            //     'tipo_negocio' => 'required',
+            //     'propietario' => 'required',
+            // ]);
 
             echo "Request data:\n";
             echo json_encode($request->all(), JSON_PRETTY_PRINT);
 
             try {
+
+                $establecimiento = establecimiento::findOrFail($id_establecimiento);
+
                 $establecimiento->nombre = $request->nombre;
                 $establecimiento->localidad = $request->localidad;
                 $establecimiento->direccion = $request->direccion;
@@ -125,26 +129,46 @@ class EstablecimientoController extends Controller
 
 
 
-            // return $request;
+
 
 
     }
     /**
      * Remove the specified resource from storage.
      */
-   public function destroy(establecimiento $establecimiento)
+   public function destroy($id_establecimiento)
 
    {
-    $establecimiento->delete();
-    return response()->noContent();
+
+    $establecimiento = establecimiento::findOrFail($id_establecimiento);
+    if(!$establecimiento){
+        return response()->json([
+            'mensaje'=>'No se pudo eliminar el registro',
+        ]);
+    }else{
+        $establecimiento->delete();
+        // return response()->noContent();
+        return response()->json([
+            'mensaje'=>'Registro eliminado exitosamente',
+        ]);
+    }
+    }
 
 
-   }
 
     public function pdf(){
-   $establecimento = establecimiento::all();
+   $establecimientos = establecimiento::all();
+
+   //cantidad de establecimientos
+   $totalestablecimiento=establecimiento::count();
+
+   //establecimientos activos
    //mostrar pdf//
-   $pdf = Pdf::loadView('pdfasistencias');
+   $pdf = Pdf::loadView('pdfestablecimientos',[
+    'establecimientos'=>$establecimientos,
+    'totalestablecimiento'=>$totalestablecimiento,
+
+   ]);
    $filepath=public_path('pdf/establecimientos.pdf');
 
      $pdf->save($filepath);
@@ -152,12 +176,6 @@ class EstablecimientoController extends Controller
     return $pdf->stream('establecimientos.pdf');
      }
 
-     public function vistapdf(){
-          $vistapdf = establecimiento::all();
-
-          return view('pdfestablecimientos',['establecimientos'=>$vistapdf]);
-
-      }
 
 
     }

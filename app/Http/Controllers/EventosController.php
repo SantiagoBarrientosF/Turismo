@@ -6,7 +6,7 @@ use App\Models\eventos;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Illuminate\Support\Facades\Log;
 
 class EventosController extends Controller
 {
@@ -23,19 +23,19 @@ class EventosController extends Controller
 
     public function store(Request $request)
     {
-        /*
-        $request->validate([
-            'nombre'=>'required',
-            'fecha'=>'required',
-            'descripcion'=>'required',
-            'aforo'=>'required',
-            'tipo_evento'=>'required',
-            'contacto'=>'required',
-            'imagen'=>'required|image|mimes:jpeg,png,jpg,gif|'
+
+        // $request->validate([
+        //     'nombre'=>'required',
+        //     'fecha'=>'required',
+        //     'descripcion'=>'required',
+        //     'aforo'=>'required',
+        //     'tipo_evento'=>'required',
+        //     'contacto'=>'required',
+        //     'imagen'=>'required',
 
 
-        ]);
-        */
+        // ]);
+
 
 
         $imagen = $request->file('imagen');
@@ -50,6 +50,7 @@ class EventosController extends Controller
             $urlevento = null;
         }
 
+        try{
 
         $eventos = new eventos;
         $eventos ->id_eventos = $request ->id_eventos;
@@ -65,12 +66,16 @@ class EventosController extends Controller
         $eventos -> save();
 
         return response()->json([
-            'message' => 'imagen enviada correctamente',
-            'imagenevento' => $imagenevento,
+            'mensaje'=>'datos guardados correctamente',
         ]);
 
-    }
+        }catch (\Exception $e) {
+            return response()->json([
+              'error' => 'Error al guardar los eventos: ' . $e->getMessage(),
+            ], 500);
 
+    }
+    }
     /*
      * Display the specified resource.
      */
@@ -128,18 +133,30 @@ class EventosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(eventos $eventos)
+    public function destroy($id_eventos)
     {
-      $eventos->delete();
-    //   return response()->noContent();
-
-      return response()->json(['message' => 'Evento eliminado exitosamente'], 200);
+        $eventos = eventos::findOrFail($id_eventos);
+        if(!$eventos){
+            return response()->json([
+                'mensaje'=>'No se pudo eliminar el registro',
+            ]);
+        }else{
+            $eventos->delete();
+            // return response()->noContent();
+            return response()->json([
+                'mensaje'=>'Registro eliminado exitosamente',
+            ]);
+        }
     }
 
 
     public function pdf(){
-    $evento = eventos::all();
-    $pdf = PDF::loadView('pdfeventos'); // Carga la vista 'pdfeventos' y genera el PDF
+    $eventos = eventos::all();
+    $totaleventos = eventos::count();
+    $pdf = PDF::loadView('pdfeventos',[
+    'eventos'=>$eventos,
+    'totaleventos'=>$totaleventos,
+    ]); // Carga la vista 'pdfeventos' y genera el PDF
     $filePath = public_path('pdf/eventos.pdf'); // Ruta completa al archivo PDF
 
     // Guarda el PDF en la ubicación especificada
@@ -151,11 +168,6 @@ class EventosController extends Controller
     //return $pdf->download('Eventos.pdf');
     }
 
-    public function vistapdf(){
-        $vistapdf = eventos::all();
 
-        return view('pdfeventos',['eventos'=>$vistapdf]);
-
-    }
 }
 

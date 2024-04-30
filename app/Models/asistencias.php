@@ -17,9 +17,17 @@ class asistencias extends Model
 
     protected $primaryKey='id_asistencias';
 
-   public function imagenes(){
+//    public function imagenes(){
 
-    return $this ->belongstomany(imagenes::class,'imagenes_has_asistencias');
+//     return $this ->belongstomany(imagenes::class,'imagenes_has_asistencias','id_asistencias','id_imagenes');
 
-   }
+//    }
+//    public function estado(){
+//        return $this->belongsTo(estado::class, 'id_estado');
+//    }
+
+//    public function imagenes()
+//     {
+//         return $this->belongsToMany(Imagen::class, 'producto_imagen', 'producto_id', 'imagen_id');
+//     }
 }

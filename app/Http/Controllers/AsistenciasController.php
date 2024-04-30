@@ -19,14 +19,15 @@ class AsistenciasController extends Controller
 
     public function store(Request $request){
 
+        echo "Request data:\n";
+        echo json_encode($request->all(), JSON_PRETTY_PRINT);
+
         // $request->validate([
         //     'id_asistencias'=>'required',
         //     'contacto'=>'required',
         //     'direccion'=>'required',
         //     'nombre'=>'required',
-        //     'imagen'=>'required|image|mimes:jpeg,png,jpg,gif|'
-
-
+        //     'imagen'=>'required',
         // ]);
 
 
@@ -44,13 +45,14 @@ class AsistenciasController extends Controller
             $urlasistencia = null;
         }
 
+        try{
         $asistencias = new asistencias;
         $asistencias ->id_asistencias = $request ->id_asistencias;
         $asistencias ->contacto = $request ->contacto;
         $asistencias ->direccion = $request ->direccion;
         $asistencias ->nombre = $request ->nombre;
         $asistencias ->imagen = $urlasistencia;
-        $asistencias ->id_estado = $request ->id_estado;
+        // $asistencias ->id_estado = $request ->id_estado;
 
         $asistencias->save();
 
@@ -58,7 +60,11 @@ class AsistenciasController extends Controller
         'mensaje' => "Datos enviados correctamente",
 
         ]);
-
+    }catch (\Exception $e) {
+        return response()->json([
+          'error' => 'Error al guardar los datos: ' . $e->getMessage(),
+        ], 500);
+      }
     }
 
     public function show(asistencias $asistencias){
@@ -97,33 +103,31 @@ class AsistenciasController extends Controller
             ], 500);
         }
 
-
-
-
-
-        // echo "Request data:\n";
-        // echo json_encode($request->all(), JSON_PRETTY_PRINT);
-
-        return response()->json([
-            'message'=>'Asistencia actualizada correctamente',
-        ]);
-
-
-
-
     }
 
 
-    public function destroy(asistencias $asistencias)
+    public function destroy($id_asistencias)
     {
-        $asistencias->delete();
-        return response()->noContent();
+        $asistencias = asistencias::findOrFail($id_asistencias);
+        if(!$asistencias){
+            return response()->json([
+                'mensaje'=>'No se pudo eliminar el registro',
+            ]);
+        }else{
+            $asistencias->delete();
+            // return response()->noContent();
+            return response()->json([
+                'mensaje'=>'Registro eliminado exitosamente',
+            ]);
+        }
 
     }
     public function pdf(){
         $asistencias = asistencias::all();
         //mostrar pdf//
-         $pdf = Pdf::loadView('pdfasistencias');
+         $pdf = Pdf::loadView('pdfasistencias',[
+            'asistencias'=>$asistencias,
+         ]);
          $filepath=public_path('pdf/asistencias.pdf');
 
          $pdf->save($filepath);
@@ -131,10 +135,5 @@ class AsistenciasController extends Controller
         return $pdf->stream('asistencias.pdf');
         }
 
-        public function vistapdf(){
-            $vistapdf = asistencias::all();
 
-            return view('pdfasistencias',['eventos'=>$vistapdf]);
-
-        }
 }

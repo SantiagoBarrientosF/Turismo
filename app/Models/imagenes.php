@@ -15,7 +15,7 @@ class imagenes extends Model
 
     public function asistencias(){
 
-        return $this->belongstomany(asistencias::class,'imagenes_has_asistencias');
+        return $this->belongstomany(asistencias::class,'imagenes_has_asistencias','id_asistencias','id_imagenes');
     }
 
     public function rutas(){
@@ -23,10 +23,10 @@ class imagenes extends Model
     }
 
     public function eventos(){
-        return $this->belongstomany(eventos::class,'imagenes_has_eventos');
+        return $this->belongstomany(eventos::class,'imagenes_has_eventos','id_eventos','id_imagenes',);
     }
 
-    public function lugares_naturales(){
-        return $this->belongstomany(lugares_naturales::class,'lugares_naturales_has_imagenes');
+    public function establecimientos(){
+        return $this->belongstomany(establecimiento::class,'establecimiento_has_imagenes','id_establecimiento','id_imagen');
     }
 }

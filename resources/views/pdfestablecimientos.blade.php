@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Informe de asistencias</h1>
+    <h1>Informe de establecimientos</h1>
     <table>
        <thead>
         <tr>
@@ -19,17 +19,17 @@
         </tr>
        </thead>
 <tbody>
-{{-- @forelse ($establecimientos as $establecimiento ) --}}
+@forelse ($establecimientos as $establecimiento )
     <tr>
-       <th>1</th>
-       <th>2</th>
-       <th>3</th>
-       <th>4</th>
+       <th>{{$totalestablecimiento}}</th>
+       <th>{{$establecimiento->nombre}}</th>
+       <th>{{$establecimiento->tipo_negocio}}</th>
+       {{-- <th>4</th> --}}
 
     </tr>
-{{-- @empty
+@empty
      <p>no hay datos</p>
-@endforelse --}}
+@endforelse
 
 
 </tbody>

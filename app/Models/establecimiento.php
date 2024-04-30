@@ -18,13 +18,13 @@ class establecimiento extends Model
       protected $primaryKey = 'id_establecimiento';
 
 
-    public function estado_establecimiento(){
+    //   public function estado()
+    //   {
+    //       return $this->belongsTo(estado::class, 'id_estado');
+    //   }
 
-        return $this ->hasMany(estado::class,'establecimientos');
-    }
-
-
-
-
+    //   public function establecimientos(){
+    //     return $this->belongstomany(imagenes::class,'establecimiento_has_imagenes','id_establecimiento','id_imagen');
+    // }
 
 }

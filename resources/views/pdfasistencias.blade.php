@@ -11,24 +11,23 @@
     <table>
        <thead>
         <tr>
-          <th>Cantidad de asistencias</th>
-          <th>Asistencias activas</th>
-          <th>Asistencias inactivas</th>
-          <th>Contacto</th>
+          <th>nombre</th>
+          <th>direccion</th>
+          <th>imagen</th>
 
         </tr>
        </thead>
 <tbody>
-{{-- @forelse ($vistapdf as $asistencia ) --}}
+@forelse ($asistencias as $asistencia )
     <tr>
-       <th>1}</th>
-       <th>2</th>
-       <th>3</th>
+       <th>{{$asistencia->nombre}}</th>
+       <th>{{$asistencia->direccion}}</th>
+       <th><img src="{{public_path('imagenes/establecimientos'.$asistencia->imagen)}}"></th>
 
     </tr>
-{{-- @empty
+@empty
      <p>no hay datos</p>
-@endforelse --}}
+@endforelse
 
 
 </tbody>

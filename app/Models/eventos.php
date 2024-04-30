@@ -15,18 +15,19 @@ class eventos extends Model
 
      protected $primaryKey = 'id_eventos';
 
-    public function imagenes(){
-        return $this->belongstomany(imagenes::class,'imagenes_has_eventos');
+    // public function imagenes(){
+    //     return $this->belongstomany(imagenes::class,'imagenes_has_eventos');
 
-    }
+    // }
 
-    public function estado(){
-        return $this->hasMany(estado::class,'estado');
-    }
+    // public function estado()
+    //   {
+    //       return $this->belongsTo(estado::class, 'id_estado');
+    //   }
 
-//     public function obtenerEventos()
-// {
-//     $eventos = eventos::all();
-//     return view('pdfeventos', ['eventos' => $eventos]);
-// }
+    //   public function eventos(){
+    //     return $this->belongstomany(imagenes::class,'imagenes_has_eventos','id_eventos','id_imagenes',);
+    // }
+
+
 }

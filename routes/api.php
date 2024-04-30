@@ -10,6 +10,7 @@ use App\Http\Controllers\ExperienciasController;
 use App\Http\Controllers\ImagenesController;
 use App\Http\Controllers\LugaresNaturalesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,9 +19,9 @@ route::apiResource('asistencia',AsistenciasController::class);
 route::apiResource('imagen',ImagenesController::class);
 route::apiResource('calificacion',CalificacionesController::class);
 route::apiResource('eventos',EventosController::class);
-// Route::delete('/evento/{id_eventos}', [EventosController::class, 'destroy']);
 route::apiResource('experiencia',ExperienciasController::class);
 route::apiResource('l_naturales',LugaresNaturalesController::class);
 route::post('start',[AuthController::class,'login'])->name('start_session');
 route::get('end',[AuthController::class,'logout'])->name('exit_session');
 Route::middleware('auth:sanctum')->get('users', [UserController::class,'getuser']);
+route::apiResource('index',IndexController::class);

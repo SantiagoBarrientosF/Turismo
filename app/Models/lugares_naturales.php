@@ -16,7 +16,5 @@ class lugares_naturales extends Model
 
     protected $primaryKey ='id_lugar';
 
-    public function nose(){
 
-    }
 }
