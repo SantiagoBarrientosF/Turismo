@@ -200,9 +200,7 @@ class EstablecimientoController extends Controller
     $establecimiento->estados = 'activo';
     $establecimiento->save();
 
-    return response()->json([
-      'mensaje' => 'Establecimiento activado con éxito:'
-    ]);
+      return view('cerrar');
 
     }catch (\Exception $e) {
       return response()->json([
