@@ -32,3 +32,9 @@ route::post('start',[AuthController::class,'login'])->name('start_session');
 route::get('end',[AuthController::class,'logout'])->name('exit_session');
 Route::middleware('auth:sanctum')->get('users', [UserController::class,'getuser']);
 route::apiResource('index',IndexController::class);
+
+
+Route::get('/activarestablecimiento/{id_establecimiento}/',[EstablecimientoController::class, 'activar'])->name('activar');
+Route::get('/activarevento/{id_eventos}/',[EventosController::class, 'activar'])->name('activarevento');
+Route::get('/activarasistencia/{id_asistencias}/',[AsistenciasController::class, 'activar'])->name('activarasistencia');
+Route::get('/activarindex/{id_index}/',[indexController::class, 'activar'])->name('activarindex');

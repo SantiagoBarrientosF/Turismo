@@ -42,7 +42,9 @@ class EstablecimientoController extends Controller
 
       $Imagenlogo = time() . '_' . $logo->getClientOriginalName();
 
-      $logo->move(public_path('imagenes/establecimientos/'), $Imagenlogo);
+      $rutaServidor = '/home/dh_v99dvi/api.launionenamora.gov.co/';
+
+      $logo->move($rutaServidor . 'imagenes/establecimientos/', $Imagenlogo);
       $urllogo = asset('imagenes/establecimientos/' . $Imagenlogo);
     } else {
       $urllogo = null;
@@ -65,7 +67,7 @@ class EstablecimientoController extends Controller
 
       $establecimiento->save();
 
-      Mail::to('sbarrientosf12@gmail.com')->send(new RegistroMailable($establecimiento));
+      Mail::to('info@launionenamora.gov.co')->send(new RegistroMailable($establecimiento));
     } catch (\Exception $e) {
       return response()->json([
         'error' => 'Error al guardar el establecimiento: ' . $e->getMessage(),
@@ -85,7 +87,7 @@ class EstablecimientoController extends Controller
   public function update(Request $request, establecimiento $establecimiento)
   {
     // return $request; 
-
+    
     $request->validate([
       'nombre' => 'required',
       'instagram' => 'required',
@@ -101,14 +103,14 @@ class EstablecimientoController extends Controller
     echo json_encode($request->all(), JSON_PRETTY_PRINT);
 
     try {
-
+      $rutaServidor = '/home/dh_v99dvi/api.launionenamora.gov.co/';
       $establecimiento = establecimiento::findOrFail($request->id_establecimiento);
 
       $request->headers->set('Content-Type', 'multipart/form-data');
 
 
       if ($request->imagen) {
-        $ruta = public_path('imagenes/establecimientos/') . $request->imagen;
+        $ruta = $rutaServidor . 'imagenes/establecimientos/' . $request->imagen;
         if (file_exists($ruta)) {
           unlink($ruta);
         }
@@ -120,7 +122,7 @@ class EstablecimientoController extends Controller
 
         $Imagenlogo = time() . '_' . $logo->getClientOriginalName();
 
-        $logo->move(public_path('imagenes/establecimientos/'), $Imagenlogo);
+        $logo->move($rutaServidor . 'imagenes/establecimientos/', $Imagenlogo);
         $urllogo = asset('imagenes/establecimientos/' . $Imagenlogo);
       } else {
         $urllogo = null;
@@ -194,18 +196,26 @@ class EstablecimientoController extends Controller
   public function activar($id_establecimiento)
   {
 
-    try{
+    try {
+
       $establecimiento = establecimiento::FindOrfail($id_establecimiento);
 
-    $establecimiento->estados = 'activo';
-    $establecimiento->save();
+      if ($establecimiento->estados == 'inactivo') {
+
+        $establecimiento->estados = 'activo';
+        $establecimiento->save();
+      } else{
+
+        $establecimiento->estados = 'inactivo';
+        $establecimiento->save();
+      }
 
       return view('cerrar');
-
-    }catch (\Exception $e) {
+      
+    } catch (\Exception $e) {
       return response()->json([
         'error' => 'Error al activar el establecimiento: ' . $e->getMessage(),
       ], 500);
+    }
   }
-}
 }

@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('establecimientos', function (Blueprint $table) {
+        Schema::table('indices', function (Blueprint $table) {
             $table->string('estados')->default('inactivo');
-            
         });
     }
 

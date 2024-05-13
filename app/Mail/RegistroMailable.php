@@ -39,7 +39,7 @@ class RegistroMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('sbarrientosf12@gmail.com', 'Santiago Barrientos'),
+            from: new Address('info@launionenamora.gov.co', 'Oficina de turismo'),
             subject: 'Peticion de registro',
         );
     }

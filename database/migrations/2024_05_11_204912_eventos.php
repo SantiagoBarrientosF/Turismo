@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('asistencias', function (Blueprint $table) {
-            $table->softDeletes();
+         Schema::table('eventos', function (Blueprint $table) {
+            $table->string('estados')->default('inactivo');
         });
     }
-
 
     /**
      * Reverse the migrations.

@@ -12,13 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request; // Importar la fachada Request para la validación
 use Illuminate\Support\Facades\Hash;
 
-// Route::get('/', function () {
-//     // Redirigir al inicio de sesión o a la página de inicio según el estado de la autenticación
-//     if (Auth::check()) {
-//         return redirect()->route('home'); // Suponiendo que tienes una ruta 'home'
-//     }
-//     return view('welcome');
-// });
 
 route::view('/login',"login")->name('login');
 route::view('/registro',"registro")->name('registro');
@@ -36,8 +29,4 @@ route::view('/usuario',"usuario")->name('usuario');
  route::get('pdf_eventos',[EventosController::class,'pdf'])->name('pdf_eventos');
 
 
-
-  
-// });
-
-Route::get('/activar/{id_establecimiento}/',[EstablecimientoController::class, 'activar'])->name('activar');
+// Route::get('/activar/{id_establecimiento}/',[EstablecimientoController::class, 'activar'])->name('activar');

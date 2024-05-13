@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('eventos', function (Blueprint $table) {
-
-            $table->foreignId('id_establecimiento')->after('id_estado');
-
+        Schema::table('asistencias', function (Blueprint $table) {
+            $table->string('estados')->default('inactivo');
         });
     }
 
