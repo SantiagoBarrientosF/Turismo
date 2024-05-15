@@ -5,6 +5,8 @@ use App\Http\Controllers\EstablecimientoController;
 use App\Http\Controllers\EventosController;
 use App\Http\Controllers\logincontroller;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistroMailable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request; // Importar la fachada Request para la validación
 use Illuminate\Support\Facades\Hash;
@@ -34,3 +36,21 @@ route::view('/usuario',"usuario")->name('usuario');
  route::get('pdf_asistencias',[AsistenciasController::class,'pdf'])->name('pdf_asistencias');
  route::get('pdf_eventos',[EventosController::class,'pdf'])->name('pdf_eventos');
 
+ Route::get('/establecimientos', [EstablecimientoController::class,'vista']);
+ Route::get('/establecimientos/{id_establecimiento}/edit', [EstablecimientoController::class,'edit']);
+
+ Route::get('email', function(){
+    Mail::to('sbarrientosf12@gmail.com')->send(new RegistroMailable);
+
+    return 'mensaje enviada';
+})->name('email');
+
+// Route::post('/establecimientosa', function(RegistroMailable $registroMailable){
+
+//     $correo='sbarrientosf12@gmail.com';
+
+//     Mail::to($correo)->send($registroMailable);
+
+//      return 'mensaje enviada';
+
+// });

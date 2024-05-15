@@ -76,6 +76,7 @@ class EstablecimientoController extends Controller
         ], 500);
       }
 
+      
     }
 
 
@@ -91,21 +92,20 @@ class EstablecimientoController extends Controller
     {
 
 
-            // $request->validate([
-            //     'nombre' => 'required',
-            //     'localidad' => 'required',
-            //     'direccion' => 'required',
-            //     'contacto' => 'required',
-            //     'descripcion' => 'required',
-            //     'tipo_negocio' => 'required',
-            //     'propietario' => 'required',
-            // ]);
+            $request->validate([
+                'nombre' => 'required',
+                'localidad' => 'required',
+                'direccion' => 'required',
+                'contacto' => 'required',
+                'descripcion' => 'required',
+                'tipo_negocio' => 'required',
+                'propietario' => 'required',
+            ]);
 
             echo "Request data:\n";
             echo json_encode($request->all(), JSON_PRETTY_PRINT);
 
             try {
-
                 $establecimiento = establecimiento::findOrFail($id_establecimiento);
 
                 $establecimiento->nombre = $request->nombre;
@@ -175,6 +175,30 @@ class EstablecimientoController extends Controller
 
     return $pdf->stream('establecimientos.pdf');
      }
+
+     public function vista()
+     {
+         $establecimientos = establecimiento::all();
+
+         return view('establecimientos.index', compact('establecimientos'));
+     }
+
+     public function edit($id_establecimiento)
+{
+    $establecimiento = Establecimiento::find($id_establecimiento);
+    return view('establecimientos.edit', compact('establecimiento'));
+}
+
+public function activar(Request $request,establecimiento $establecimiento){
+
+    // if($establecimiento->estado=='inactivo'){
+    //   $estado = estado::find($establecimiento->id_estado);
+    //   $estado->estado = 'activo';
+    //   $estado->save();
+    // }else{
+    //   return 'no se pudo guardar el estado';
+    // }
+  }
 
 
 

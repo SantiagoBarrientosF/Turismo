@@ -7,29 +7,48 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{'actualizar'}}" method="POST" enctype="multipart/form-data">
-    <label>
-        <input name="nombre" type="text">
-    </label>
-    <label>
-        <input type="date" name="fecha">
-    </label>
-    <label>
-        <input type="text" name="descripcion">
-    </label>
-    <label>
-        <input type="number" name="aforo">
-    </label>
-    <label>
-        <input type="text" name="tipo_evento">
-    </label>
-    <label>
-        <input type="number" name="contacto">
-    </label>
-    <label>
-        <input type="file" name="imagen">
-    </label>
-   <button type="submit">Sapo</button>
+    <form action="{{'route(establecimiento,$id_establecimiento)'}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">localidad</label>
+            <input type="text" class="form-control" id="email" name="localidad">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">direccion</label>
+            <input type="text" class="form-control" id="password" name="direccion">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">contacto</label>
+            <input type="text" class="form-control" id="password" name="contacto">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">descripcion</label>
+            <input type="text" class="form-control" id="password" name="descripcion">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">tipo_negocio</label>
+            <input type="text" class="form-control" id="password" name="tipo_negocio">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">propietario</label>
+            <input type="text" class="form-control" id="password" name="propietario">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+    </form>
 
 
     </form>
